@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, json } from "express";
 import cors from "cors";
 import { publicRouter } from "./app/router/api";
 import multer from "multer";
@@ -12,6 +12,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 app.use(cors());
+app.use(json())
 
 app.use(publicRouter);
 
