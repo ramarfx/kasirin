@@ -42,9 +42,20 @@ const destroy = async (req: Request, res: Response) => {
   }
 }
 
+const destroyAll = async (req: Request, res: Response) => {
+  try {
+    const result = await productService.destroyAll();
+
+    res.json(result)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
 export default {
     post,
     get,
     show,
-    destroy
+    destroy,
+    destroyAll
 }

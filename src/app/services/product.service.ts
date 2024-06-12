@@ -106,9 +106,20 @@ const deleteProduct = async (id: number) => {
   }
 };
 
+const destroyAll = async () => {
+  try {
+      await prisma.product.deleteMany()
+
+      return {message: 'all product deleted'};
+  } catch (error) {
+      throw new Error(error)
+  }
+}
+
 export default {
   post,
   get,
   show,
-  deleteProduct
+  deleteProduct,
+  destroyAll
 };
