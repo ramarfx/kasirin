@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import productController from '../controller/product.controller';
 import { upload } from '../../index';
 import cartController from '../controller/cart.controller';
@@ -23,5 +23,10 @@ publicRouter.get('/api/carts', cartController.get)
 publicRouter.delete('/api/carts', cartController.destroyAll)
 publicRouter.delete('/api/carts/:id', cartController.destroy);
 publicRouter.post('/api/products/:id/add', cartController.addToCart)
+
+// health
+publicRouter.get('/api/health', (req: Request, res: Response) => {
+  res.json({'message': 'ok bosskuh'})
+})
 
 
