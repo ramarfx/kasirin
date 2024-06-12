@@ -8,15 +8,16 @@ import supabase from "./app/database";
 const app = express();
 const port = process.env.PORT || 3000;
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+export const storage = multer.memoryStorage();
+export const upload = multer({ storage: storage });
 
 app.use(cors());
-app.use(json())
+app.use(json());
+app.use(upload.single('image'))
 
 app.use(publicRouter);
 
-app.post("/upload", upload.single("image"), async (req, res) => {
+app.post("/upload", async (req, res) => {
   try {
     const file = req.file;
 
@@ -25,6 +26,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     }
 
     const filename = `${Date.now()}-${file.originalname}`;
+    
 
     const { data, error } = await supabase.storage
       .from("product")
