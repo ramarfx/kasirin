@@ -76,4 +76,5 @@ app.post("/upload", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 app.listen(port, () => {
     console.log(`server running http://localhost:${port}`);
 });
+exports.default = app;
 //# sourceMappingURL=index.js.map
