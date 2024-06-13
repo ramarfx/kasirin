@@ -27,7 +27,7 @@ model Product {
 model Cart {
   id Int @id @default(autoincrement())
   product_id Int
-  price BigInt
+  amount Int
   product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
 }
