@@ -9,7 +9,7 @@ const product_controller_1 = __importDefault(require("../controller/product.cont
 exports.publicRouter = express_1.default.Router();
 exports.publicRouter.get('/', (req, res) => {
     res.json({
-        message: 'hello from api.ts'
+        message: 'hello world'
     });
 });
 exports.publicRouter.post('/products', product_controller_1.default.post);

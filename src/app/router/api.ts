@@ -6,7 +6,7 @@ export const publicRouter = express.Router();
 
 publicRouter.get('/', (req, res) => {
     res.json({
-        message: 'hello from api.ts'
+        message: 'hello world'
     })
 })
 
