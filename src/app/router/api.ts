@@ -11,12 +11,15 @@ publicRouter.get('/', (req, res) => {
     })
 })
 
-// product
-publicRouter.post('/api/products', productController.post)
-publicRouter.delete('/api/products', productController.destroyAll)
-publicRouter.get('/api/products', productController.get)
-publicRouter.get('/api/products/:id', productController.show)
-publicRouter.delete('/api/products/:id', productController.destroy)
+publicRouter.post('/products', productController.post)
+publicRouter.get('/products', productController.get)
+publicRouter.get('/products/:id', productController.show)
+publicRouter.delete('/products/:id', productController.destroy)
+
+publicRouter.get('/carts', cartController.get)
+publicRouter.delete('/carts', cartController.destroyAll)
+publicRouter.delete('/carts/:id', cartController.destroy);
+publicRouter.post('/products/:id/add', cartController.addToCart)
 
 // cart
 publicRouter.get('/api/carts', cartController.get)

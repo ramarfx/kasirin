@@ -13,10 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_service_1 = __importDefault(require("../services/product.service"));
-const post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const cart_service_1 = __importDefault(require("../services/cart.service"));
+const addToCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield product_service_1.default.post(req);
-        return res.json({ data: result });
+        const product = yield product_service_1.default.show(Number(req.params.id));
+        const result = yield cart_service_1.default.addToCart(product);
+        res.json({ data: result });
     }
     catch (error) {
         res.status(400).json({ error: error.message });
@@ -24,17 +26,8 @@ const post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield product_service_1.default.get();
-        return res.json({ data: result });
-    }
-    catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-});
-const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield product_service_1.default.show(Number(req.params.id));
-        return res.json({ data: result });
+        const result = yield cart_service_1.default.get();
+        res.json({ data: result });
     }
     catch (error) {
         res.status(400).json({ error: error.message });
@@ -42,17 +35,26 @@ const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield product_service_1.default.deleteProduct(Number(req.params.id));
-        return res.json(result);
+        const result = yield cart_service_1.default.destroy(Number(req.params.id));
+        res.json(result);
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+const destroyAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield cart_service_1.default.destroyAll();
+        res.json(result);
     }
     catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 exports.default = {
-    post,
+    addToCart,
     get,
-    show,
-    destroy
+    destroy,
+    destroyAll
 };
-//# sourceMappingURL=product.controller.js.map
+//# sourceMappingURL=cart.controller.js.map

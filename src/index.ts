@@ -51,3 +51,5 @@ app.post("/upload", async (req, res) => {
 app.listen(port, () => {
   console.log(`server running http://localhost:${port}`);
 });
+
+export default app;
