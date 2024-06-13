@@ -6,13 +6,13 @@ export const publicRouter = express.Router();
 
 publicRouter.get('/', (req, res) => {
     res.json({
-        message: 'hello world'
+        message: 'hello from api.ts'
     })
 })
 
-publicRouter.post('/api/products', productController.post)
-publicRouter.get('/api/products', productController.get)
-publicRouter.get('/api/products/:id', productController.show)
-publicRouter.delete('/api/products/:id', productController.destroy)
+publicRouter.post('/products', productController.post)
+publicRouter.get('/products', productController.get)
+publicRouter.get('/products/:id', productController.show)
+publicRouter.delete('/products/:id', productController.destroy)
 
 

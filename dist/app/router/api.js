@@ -9,13 +9,11 @@ const product_controller_1 = __importDefault(require("../controller/product.cont
 exports.publicRouter = express_1.default.Router();
 exports.publicRouter.get('/', (req, res) => {
     res.json({
-        message: 'hello world'
+        message: 'hello from api.ts'
     });
 });
-exports.publicRouter.post('/api/products', product_controller_1.default.post);
-exports.publicRouter.post('/api/product', (req, res) => {
-    res.json({
-        message: req.body
-    });
-});
+exports.publicRouter.post('/products', product_controller_1.default.post);
+exports.publicRouter.get('/products', product_controller_1.default.get);
+exports.publicRouter.get('/products/:id', product_controller_1.default.show);
+exports.publicRouter.delete('/products/:id', product_controller_1.default.destroy);
 //# sourceMappingURL=api.js.map

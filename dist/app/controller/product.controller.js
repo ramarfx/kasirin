@@ -15,19 +15,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const product_service_1 = __importDefault(require("../services/product.service"));
 const post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = product_service_1.default.post(req);
-        // res.json(result)
-        const data = req.body;
-        return res.json({
-            data: req.body,
-            message: 'success post product',
-        });
+        const result = yield product_service_1.default.post(req);
+        return res.json({ data: result });
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json({ error: error.message });
+    }
+});
+const get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield product_service_1.default.get();
+        return res.json({ data: result });
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield product_service_1.default.show(Number(req.params.id));
+        return res.json({ data: result });
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield product_service_1.default.deleteProduct(Number(req.params.id));
+        return res.json(result);
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message });
     }
 });
 exports.default = {
-    post
+    post,
+    get,
+    show,
+    destroy
 };
 //# sourceMappingURL=product.controller.js.map

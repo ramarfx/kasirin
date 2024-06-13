@@ -35,6 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.upload = exports.storage = void 0;
 const express_1 = __importStar(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const api_1 = require("./app/router/api");
@@ -42,12 +43,13 @@ const multer_1 = __importDefault(require("multer"));
 const database_1 = __importDefault(require("./app/database"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
-const storage = multer_1.default.memoryStorage();
-const upload = (0, multer_1.default)({ storage: storage });
+exports.storage = multer_1.default.memoryStorage();
+exports.upload = (0, multer_1.default)({ storage: exports.storage });
 app.use((0, cors_1.default)());
 app.use((0, express_1.json)());
+app.use(exports.upload.single('image'));
 app.use(api_1.publicRouter);
-app.post("/upload", upload.single("image"), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/upload", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const file = req.file;
         if (!file) {
