@@ -6,13 +6,11 @@
 
 
 # Connect to Supabase via connection pooling with Supavisor.
-DATABASE_URL="postgres://postgres.dmjmbsmlalzmlgqbewvi:3XdsnA5L6leOjZvO@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DATABASE_URL=
 
 # Direct connection to the database. Used for migrations.
-DIRECT_URL="postgres://postgres.dmjmbsmlalzmlgqbewvi:3XdsnA5L6leOjZvO@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
+DIRECT_URL=
 
-
-SUPABASE_URL=https://dmjmbsmlalzmlgqbewvi.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtam1ic21sYWx6bWxncWJld3ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTgxMDExNzgsImV4cCI6MjAzMzY3NzE3OH0.PPTTP9VWzEy5RRMLpVgS2Jq5wTdnJoZrpEidD9Rrutk
-        
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
         
