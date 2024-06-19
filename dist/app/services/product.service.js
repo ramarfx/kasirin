@@ -34,10 +34,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importStar(require("../database"));
 const utils_1 = require("../utils/utils");
-const post = (request) => __awaiter(void 0, void 0, void 0, function* () {
+const post = (request, storeName) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!(request.body.name || request.body.price || request.body.image)) {
             throw new Error("invalid field");
+        }
+        const store = yield database_1.prisma.store.findFirst({
+            where: {
+                name: storeName,
+            },
+        });
+        if (!store) {
+            throw new Error("store not found");
         }
         const file = request.file;
         if (!file) {
@@ -57,6 +65,7 @@ const post = (request) => __awaiter(void 0, void 0, void 0, function* () {
                 name: request.body.name,
                 price: request.body.price.toString(),
                 image: imagePath,
+                store_id: store.id,
             },
         });
         return (0, utils_1.convertBigIntToNumber)(product);
@@ -65,9 +74,21 @@ const post = (request) => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-const get = () => __awaiter(void 0, void 0, void 0, function* () {
+const get = (storeName) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const products = yield database_1.prisma.product.findMany();
+        const store = yield database_1.prisma.store.findFirst({
+            where: {
+                name: storeName,
+            },
+        });
+        if (!store) {
+            throw new Error("store not found");
+        }
+        const products = yield database_1.prisma.product.findMany({
+            where: {
+                store_id: store.id,
+            },
+        });
         if (!products) {
             throw new Error("product is not empty");
         }
@@ -77,11 +98,22 @@ const get = () => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-const show = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const show = (id, storeName) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const store = yield database_1.prisma.store.findFirst({
+            where: {
+                name: storeName,
+            },
+        });
+        if (!store) {
+            throw new Error("store not found");
+        }
         const product = yield database_1.prisma.product.findFirst({
             where: {
                 id: id,
+                AND: {
+                    store_id: store.id
+                }
             },
         });
         if (!product) {
@@ -122,10 +154,32 @@ const deleteProduct = (id) => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
+const destroyAll = (storeName) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const store = yield database_1.prisma.store.findFirst({
+            where: {
+                name: storeName,
+            },
+        });
+        if (!store) {
+            throw new Error("store not found");
+        }
+        yield database_1.prisma.product.deleteMany({
+            where: {
+                store_id: store.id,
+            },
+        });
+        return { message: "all product deleted" };
+    }
+    catch (error) {
+        throw new Error(error);
+    }
+});
 exports.default = {
     post,
     get,
     show,
-    deleteProduct
+    deleteProduct,
+    destroyAll,
 };
 //# sourceMappingURL=product.service.js.map

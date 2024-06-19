@@ -16,8 +16,8 @@ const product_service_1 = __importDefault(require("../services/product.service")
 const cart_service_1 = __importDefault(require("../services/cart.service"));
 const addToCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const product = yield product_service_1.default.show(Number(req.params.id));
-        const result = yield cart_service_1.default.addToCart(product);
+        const product = yield product_service_1.default.show(Number(req.params.id), req.params.store);
+        const result = yield cart_service_1.default.addToCart(product, req.params.store);
         res.json({ data: result });
     }
     catch (error) {
@@ -26,7 +26,7 @@ const addToCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield cart_service_1.default.get();
+        const result = yield cart_service_1.default.get(req.params.store);
         res.json({ data: result });
     }
     catch (error) {
@@ -44,7 +44,7 @@ const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const destroyAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield cart_service_1.default.destroyAll();
+        const result = yield cart_service_1.default.destroyAll(req.params.store);
         res.json(result);
     }
     catch (error) {

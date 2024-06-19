@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const product_service_1 = __importDefault(require("../services/product.service"));
 const post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield product_service_1.default.post(req);
+        const result = yield product_service_1.default.post(req, req.params.store);
         return res.json({ data: result });
     }
     catch (error) {
@@ -24,7 +24,7 @@ const post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield product_service_1.default.get();
+        const result = yield product_service_1.default.get(req.params.store);
         return res.json({ data: result });
     }
     catch (error) {
@@ -33,7 +33,7 @@ const get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield product_service_1.default.show(Number(req.params.id));
+        const result = yield product_service_1.default.show(Number(req.params.id), req.params.store);
         return res.json({ data: result });
     }
     catch (error) {
@@ -49,10 +49,20 @@ const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(400).json({ error: error.message });
     }
 });
+const destroyAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield product_service_1.default.destroyAll(req.params.store);
+        res.json(result);
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
 exports.default = {
     post,
     get,
     show,
-    destroy
+    destroy,
+    destroyAll
 };
 //# sourceMappingURL=product.controller.js.map
