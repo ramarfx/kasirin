@@ -2,41 +2,41 @@ import { Product } from "@prisma/client";
 import { prisma } from "../database";
 import { convertBigIntToNumber } from "../utils/utils";
 
-const addToCart = async (product: Product) => {
-  try {
-    if (!product) {
-      throw new Error("product not found");
-    }
+// const addToCart = async (product: Product) => {
+//   try {
+//     if (!product) {
+//       throw new Error("product not found");
+//     }
 
-    const cart = await prisma.cart.findFirst({
-      where: {
-        product_id: product.id,
-      },
-    });
+//     const cart = await prisma.cart.findFirst({
+//       where: {
+//         product_id: product.id,
+//       },
+//     });
 
-    if (cart) {
-      await prisma.cart.update({
-        where: {
-          id: cart.id,
-        },
-        data: {
-          amount: cart.amount + 1,
-        },
-      });
-    } else {
-      await prisma.cart.create({
-        data: {
-          product_id: product.id,
-          amount: 1,
-        },
-      });
-    }
+//     if (cart) {
+//       await prisma.cart.update({
+//         where: {
+//           id: cart.id,
+//         },
+//         data: {
+//           amount: cart.amount + 1,
+//         },
+//       });
+//     } else {
+//       await prisma.cart.create({
+//         data: {
+//           product_id: product.id,
+//           amount: 1,
+//         },
+//       });
+//     }
 
-    return { message: `product ${product.name} added to cart` };
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+//     return { message: `product ${product.name} added to cart` };
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// };
 
 const get = async () => {
   try {
@@ -101,8 +101,10 @@ const destroyAll = async () => {
     }
 }
 
+
+
 export default {
-  addToCart,
+  // addToCart,
   get,
   destroy,
   destroyAll

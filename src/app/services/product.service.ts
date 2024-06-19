@@ -3,10 +3,20 @@ import supabase, { prisma } from "../database";
 import { Product } from "../types/product.type";
 import { convertBigIntToNumber } from "../utils/utils";
 
-const post = async (request: any) => {
+const post = async (request: any, storeName: string) => {
   try {
     if (!(request.body.name || request.body.price || request.body.image)) {
       throw new Error("invalid field");
+    }
+
+    const store = await prisma.store.findFirst({
+      where: {
+        name: storeName,
+      },
+    });
+
+    if (!store) {
+      throw new Error("store not found");
     }
 
     const file = request.file;
@@ -33,6 +43,7 @@ const post = async (request: any) => {
         name: request.body.name,
         price: request.body.price.toString(),
         image: imagePath,
+        store_id: store.id,
       },
     });
     return convertBigIntToNumber(product);
@@ -41,9 +52,23 @@ const post = async (request: any) => {
   }
 };
 
-const get = async () => {
+const get = async (storeName: string) => {
   try {
-    const products = await prisma.product.findMany();
+    const store = await prisma.store.findFirst({
+      where: {
+        name: storeName,
+      },
+    });
+
+    if (!store) {
+      throw new Error("store not found");
+    }
+
+    const products = await prisma.product.findMany({
+      where: {
+        store_id: store.id,
+      },
+    });
 
     if (!products) {
       throw new Error("product is not empty");
@@ -106,20 +131,34 @@ const deleteProduct = async (id: number) => {
   }
 };
 
-const destroyAll = async () => {
+const destroyAll = async (storeName: string) => {
   try {
-      await prisma.product.deleteMany()
+    const store = await prisma.store.findFirst({
+      where: {
+        name: storeName,
+      },
+    });
 
-      return {message: 'all product deleted'};
+    if (!store) {
+      throw new Error("store not found");
+    }
+
+    await prisma.product.deleteMany({
+      where: {
+        store_id: store.id,
+      },
+    });
+
+    return { message: "all product deleted" };
   } catch (error) {
-      throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 export default {
   post,
   get,
   show,
   deleteProduct,
-  destroyAll
+  destroyAll,
 };

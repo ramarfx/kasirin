@@ -6,7 +6,7 @@ import path from "path";
 import supabase from "./app/database";
 
 const app = express();
-const port = process.env.PORT || 3003;
+const port = process.env.PORT || 3000;
 
 export const storage = multer.memoryStorage();
 export const upload = multer({ storage: storage });

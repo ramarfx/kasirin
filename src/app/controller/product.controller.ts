@@ -3,7 +3,7 @@ import productService from "../services/product.service";
 
 const post = async (req: Request, res: Response ) => {
     try {
-        const result = await productService.post(req);
+        const result = await productService.post(req, req.params.store);
 
         return res.json({data: result})
     
@@ -14,7 +14,7 @@ const post = async (req: Request, res: Response ) => {
 
 const get = async (req: Request, res: Response) => {
   try {
-    const result = await productService.get();
+    const result = await productService.get(req.params.store);
 
     return res.json({data: result})
   } catch (error) {
@@ -44,7 +44,7 @@ const destroy = async (req: Request, res: Response) => {
 
 const destroyAll = async (req: Request, res: Response) => {
   try {
-    const result = await productService.destroyAll();
+    const result = await productService.destroyAll(req.params.store);
 
     res.json(result)
   } catch (error) {
