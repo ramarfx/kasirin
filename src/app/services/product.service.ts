@@ -80,11 +80,24 @@ const get = async (storeName: string) => {
   }
 };
 
-const show = async (id: number) => {
+const show = async (id: number, storeName: any) => {
   try {
+    const store = await prisma.store.findFirst({
+      where: {
+        name: storeName,
+      },
+    });
+
+    if (!store) {
+      throw new Error("store not found");
+    }
+
     const product = await prisma.product.findFirst({
       where: {
         id: id,
+        AND: {
+          store_id: store.id
+        }
       },
     });
 

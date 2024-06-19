@@ -4,7 +4,7 @@ import cartService from "../services/cart.service";
 
 const addToCart = async (req: Request, res: Response) => {
   try {
-    const product = await productService.show(Number(req.params.id))
+    const product = await productService.show(Number(req.params.id), req.params.store)
 
     const result = await cartService.addToCart(product, req.params.store);
 

@@ -24,7 +24,7 @@ const get = async (req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const result = await productService.show(Number(req.params.id));
+    const result = await productService.show(Number(req.params.id), req.params.store);
 
     return res.json({data: result})
   } catch (error) {

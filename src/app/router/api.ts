@@ -14,7 +14,7 @@ publicRouter.get('/', (req, res) => {
 
 publicRouter.post('/products/:store', productController.post)
 publicRouter.get('/products/:store', productController.get)
-publicRouter.get('/products/:id', productController.show)
+publicRouter.get('/products/:store/:id', productController.show)
 publicRouter.delete('/products/:store/:id', productController.destroy)
 
 publicRouter.post('/products/:store/:id/add', cartController.addToCart)
